@@ -19,7 +19,7 @@ export const ProductCard = ({ product }: Props) => {
                     <Text style={styles.textProductName}>{product.product}</Text>
                     <Text style={styles.textProductDate}>{product.createdAt}</Text>
                 </View>
-                <View style={styles.textPoint}>
+                <View style={styles.textPointContainer}>
                     {
                         !product.is_redemption ? <Icon
                             name="add-outline"
@@ -31,13 +31,13 @@ export const ProductCard = ({ product }: Props) => {
                             size={16}
                         />
                     }
-                    <Text>{product.points}</Text>
+                    <Text style={styles.textPoint}>{product.points}</Text>
+                    <Icon style={{ marginLeft: 12 }}
+                        name="chevron-forward-outline"
+                        color="#070707"
+                        size={16}
+                    />
                 </View>
-                <Icon
-                    name="chevron-forward-outline"
-                    color="#070707"
-                    size={16}
-                />
             </View>
         </TouchableOpacity>
     )
@@ -64,8 +64,13 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontWeight: '400'
     },
-    textPoint: {
+    textPointContainer: {
         flexDirection: 'row',
-        top: 18
+        top: 18,
+        position: 'absolute',
+        right: 0
+    },
+    textPoint: {
+        fontWeight: '800',
     }
 })
