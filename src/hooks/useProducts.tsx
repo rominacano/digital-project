@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 import { useEffect, useState } from 'react';
 import { productsAPI } from '../api/productsAPI';
 import { ProductResponse } from '../interfaces/productInterfaces';
@@ -10,13 +12,21 @@ export const useProducts = () => {
 
     const loadProducts = async () => {
         const response = await productsAPI.get<ProductResponse[]>(url);
-        setProducts(response.data);
-        setIsLoading(false);
+        mapProductList(response.data)
     }
 
-    // const filterProductList = ( productList: ProductResponse[]) => {
+    const mapProductList = (productList: ProductResponse[]) => {
 
-    // }
+        const newProductList: ProductResponse[] = productList.map((product) => {
+            return {
+                ...product,
+                createdAt: format(new Date(product.createdAt), "dd 'de' MMMM, yyyy", { locale: es }),
+            }
+        });
+        setProducts(newProductList);
+        setIsLoading(false);
+
+    }
 
     useEffect(() => {
         loadProducts();
