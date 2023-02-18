@@ -5,22 +5,21 @@ import { ProductCard } from './ProductCard';
 
 interface Props {
     products: ProductResponse[];
-    isLoading: boolean
+    isLoading: boolean,
 }
 
 export const ActivityList = ({ products, isLoading }: Props) => {
     return (
         <FlatList
+            testID="activity-list-component"
             style={{ ...styles.cardContainer }}
             data={products}
             keyExtractor={(product) => product.id}
             renderItem={({ item }) => (<ProductCard product={item} />
             )}
-
-            // onEndReached={loadProducts}
-            // onEndReachedThreshold={0.4}
             ListFooterComponent={isLoading ? (
                 <ActivityIndicator
+                    testID='loading-indicator'
                     style={{ height: 100 }}
                     size={20}
                     color="grey" />

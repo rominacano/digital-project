@@ -11,19 +11,28 @@ import CustomButton from '../components/CustomBotton';
 
 export const HomeScreen = () => {
 
-    const { isLoading, productList, loadProducts } = useProducts();
+    const { isLoading, productList } = useProducts();
+    const [productFiltered, setProductFiltered] = useState(productList.products);
     const [filter, setFilter] = useState('all')
     const { top } = useSafeAreaInsets();
 
-    const onFilterProducts = (filter: string) => {
-        setFilter(filter);
-        loadProducts(filter);
+    const onFilterProducts = (filterParam: string) => {
+        if (filterParam === 'all') {
+            setProductFiltered(productList.products)
+        } else {
+            setProductFiltered(productList.products.filter(
+                (product) =>
+                    (filterParam === 'ganados' && !product.is_redemption) ||
+                    (filterParam !== 'ganados' && product.is_redemption)
+            ))
+        }
+        setFilter(filterParam);
     }
 
     return (
-        <View style={{
+        <View testID='home-screen-component' style={{
             ...globalStyles.general,
-            top: top + 13,
+            top: top + 13
         }}>
             <Welcome />
             <Text style={{
@@ -32,7 +41,7 @@ export const HomeScreen = () => {
             <HeaderSeccion title={"TUS PUNTOS"} />
             <TotalPoints totalPoints={productList.totalPoints} />
             <HeaderSeccion title={"TUS MOVIMIENTOS"} />
-            <ActivityList products={productList.products} isLoading={isLoading} />
+            <ActivityList products={productFiltered} isLoading={isLoading} />
             {filter !== 'all' ? <CustomButton
                 title="Todos"
                 onPress={() => onFilterProducts('all')}
