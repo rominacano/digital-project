@@ -1,14 +1,14 @@
 import React from 'react'
 import { ProductResponse } from '../interfaces/productInterfaces';
-import { Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
-import { globalStyles } from '../theme/appTheme';
+import { StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import { ProductCard } from './ProductCard';
 
 interface Props {
     products: ProductResponse[];
+    isLoading: boolean
 }
 
-export const ActivityList = ({ products }: Props) => {
+export const ActivityList = ({ products, isLoading }: Props) => {
     return (
         <FlatList
             style={{ ...styles.cardContainer }}
@@ -19,12 +19,12 @@ export const ActivityList = ({ products }: Props) => {
 
             // onEndReached={loadProducts}
             // onEndReachedThreshold={0.4}
-            ListFooterComponent={(
+            ListFooterComponent={isLoading ? (
                 <ActivityIndicator
                     style={{ height: 100 }}
                     size={20}
                     color="grey" />
-            )}
+            ) : null}
         />
     )
 }

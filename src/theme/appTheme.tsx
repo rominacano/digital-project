@@ -17,5 +17,8 @@ export const globalStyles = StyleSheet.create({
         fontSize: 14,
         fontWeight: '800',
         color: '#9B9898'
+    },
+    button: {
+
     }
 })

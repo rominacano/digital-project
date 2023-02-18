@@ -11,3 +11,8 @@ export interface ProductResponse {
     verification_code?: string;
     reason?: string;
 }
+
+export interface ProductSimpleList {
+    totalPoints: string,
+    products: ProductResponse[]
+}

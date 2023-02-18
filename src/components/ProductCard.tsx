@@ -1,16 +1,28 @@
 import React from 'react'
 import Icon from 'react-native-vector-icons/Ionicons';
+import { RootStackParams } from '../navigator/Navigator';
+import { useNavigation } from '@react-navigation/core';
 import { ProductResponse } from '../interfaces/productInterfaces';
 import { Text, TouchableOpacity, View, StyleSheet } from 'react-native';
 import { FadeInImage } from './FadeInImage';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 interface Props {
     product: ProductResponse;
 }
 
 export const ProductCard = ({ product }: Props) => {
+
+    const navigation = useNavigation<StackNavigationProp<RootStackParams>>();
+
     return (
-        <TouchableOpacity>
+        <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={
+                () => navigation.navigate('ProductScreen', {
+                    product,
+                })
+            }>
             <View style={styles.cardContainer}>
                 <FadeInImage
                     uri={product.image}
@@ -46,11 +58,11 @@ export const ProductCard = ({ product }: Props) => {
 const styles = StyleSheet.create({
     cardContainer: {
         flexDirection: 'row',
-        marginVertical: 8,
+        marginVertical: 4,
     },
     cardImage: {
-        width: 45,
-        height: 45,
+        width: 55,
+        height: 55,
         borderRadius: 10,
         marginHorizontal: 10,
     },
